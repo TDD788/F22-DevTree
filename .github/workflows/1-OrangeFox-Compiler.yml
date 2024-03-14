@@ -20,7 +20,7 @@ on:
       DEVICE_TREE:
         description: 'OrangeFox Device Tree'
         required: true
-        default: 'https://github.com/TDD788/A12s-DevTree'
+        default: 'https://github.com/TDD788/F22-DevTree'
       DEVICE_TREE_BRANCH:
         description: 'OrangeFox Device Tree Branch'
         required: true
@@ -28,11 +28,11 @@ on:
       DEVICE_PATH:
         description: 'Specify your Device Path'
         required: true
-        default: 'device/samsung/a12s'
+        default: 'device/samsung/f22'
       DEVICE_NAME:
         description: 'Specify your Device Codename'
         required: true
-        default: 'a12s'
+        default: 'f22'
       RELEASE_TYPE:
         description: 'Release type'
         required: true
