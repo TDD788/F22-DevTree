@@ -2,11 +2,11 @@
 sudo apt install nano
 git clone https://gitlab.com/EdwinT2/avb_tool -b main out/host/linux-x86/bin
 sudo chmod +rwx out/host/linux-x86/bin/avbtool
-chmod a+x device/samsung/a12s/prebuilt/avb/mkbootimg
-add_lunch_combo twrp_a12s-eng
+chmod a+x device/samsung/f22/prebuilt/avb/mkbootimg
+add_lunch_combo twrp_f22-eng
 
-FDEVICE1="a12s"
-CURR_DEVICE="a12s"
+FDEVICE1="f22"
+CURR_DEVICE="f22"
 
 RED_BACK="\e[101m"
 RED="\e[91m"
@@ -14,7 +14,7 @@ RESET="\e[0m"
 GREEN="\e[92m"
 
 export_build_vars(){
-	echo -e "${GREEN}Exporting build vars from the a12s tree${RESET}"
+	echo -e "${GREEN}Exporting build vars from the f22 tree${RESET}"
 	# General Configurations
 	export ALLOW_MISSING_DEPENDENCIES=true
 	export OF_DONT_PATCH_ENCRYPTED_DEVICE=1
@@ -101,7 +101,7 @@ export_build_vars(){
 	export OF_FLASHLIGHT_ENABLE=1
 	
 	# Maintainer Avatar
-	wget https://raw.githubusercontent.com/TDD788/A12s-DevTree/DT-Builder/recovery/root/TheDarkDeath788.png
+	wget https://raw.githubusercontent.com/TDD788/f22-DevTree/DT-Builder/recovery/root/TheDarkDeath788.png
 	export OF_MAINTAINER_AVATAR="./maintainer.png"
 
 	# Applications Configurations
@@ -140,15 +140,15 @@ set_env_var(){
         echo -e "${RED_BACK}Environment Variable CURR_DEVICE not set... Aborting${RESET}"
         echo "Set to the codename of the device you're building for"
         echo -e "${GREEN}Example :${RESET}"
-        echo " export CURR_DEVICE=a12s"
+        echo " export CURR_DEVICE=f22"
         exit 1
 }
 
 var_not_eq(){
-        echo -e "${RED_BACK}CURR_DEVICE not equal to a12s${RESET}"
+        echo -e "${RED_BACK}CURR_DEVICE not equal to f22${RESET}"
         echo -e "${RED_BACK}CURR_DEVICE = $CURR_DEVICE${RESET}"
         echo -e "${RED}If this is a mistake, then export CURR_DEVICE to the correct codename${RESET}"
-        echo -e "${RED}Skipping a12s specific build vars...${RESET}"
+        echo -e "${RED}Skipping f22 specific build vars...${RESET}"
 }
 
 case "$CURR_DEVICE" in
