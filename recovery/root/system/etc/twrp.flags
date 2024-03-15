@@ -1,62 +1,56 @@
-# Copyright (c) 2011, Code Aurora Forum. All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#     * Redistributions of source code must retain the above copyright
-#       notice, this list of conditions and the following disclaimer.
-#     * Redistributions in binary form must reproduce the above
-#       copyright notice, this list of conditions and the following
-#       disclaimer in the documentation and/or other materials provided
-#       with the distribution.
-#     * Neither the name of Code Aurora Forum, Inc. nor the names of its
-#       contributors may be used to endorse or promote products derived
-#       from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
-# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
-# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
-# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Symlinked partitions
+/system_image	emmc		/dev/block/mapper/system							flags=backup=0;flashimg;display="System Image"
+/vendor_image	emmc		/dev/block/mapper/vendor							flags=backup=0;flashimg;display="Vendor Image"
+/product_image	emmc		/dev/block/mapper/product							flags=backup=0;flashimg;display="Product Image"
+/odm_image		emmc		/dev/block/mapper/odm								flags=backup=0;flashimg;display="Odm Image"
 
-#<mnt_point>    <type>  <src>                                   <mnt_flags and options>
-/product       ext4 /dev/block/mapper/product  flags=backup=1;wipeingui;display="Product"
-/product       f2fs /dev/block/mapper/product  flags=backup=1;wipeingui;display="Product"
-/product_image emmc /dev/block/mapper/product  flags=backup=1;flashimg;display="Product Image"
-/system_root   f2fs /dev/block/mapper/system  flags=backup=1;wipeingui;display="System"
-/system_root   ext4 /dev/block/mapper/system  flags=backup=1;wipeingui;display="System"
-/system_image  emmc /dev/block/mapper/system  flags=backup=1;flashimg;display="System Image"
-/vendor        ext4 /dev/block/mapper/vendor  flags=backup=1;wipeingui;display="Vendor"
-/vendor        f2fs /dev/block/mapper/vendor  flags=backup=1;wipeingui;display="Vendor"
-/vendor_image  emmc /dev/block/mapper/vendor  flags=backup=1;flashimg;display="Vendor Image"
-/odm        ext4 /dev/block/mapper/odm  flags=backup=1;wipeingui;display="Odm"
-/odm        f2fs /dev/block/mapper/odm  flags=backup=1;wipeingui;display="Odm"
-/odm_image  emmc /dev/block/mapper/odm  flags=backup=1;flashimg;display="Odm Image"
-/boot           emmc    /dev/block/by-name/boot                 flags=display="Boot";backup=1;flashimg=1;
-/recovery       emmc    /dev/block/by-name/recovery             flags=display="Recovery";backup=1;flashimg=1;
-/metadata       ext4    /dev/block/by-name/metadata             flags=display="Metadata";
-/data           f2fs    /dev/block/by-name/userdata
-/cache          ext4    /dev/block/by-name/cache                flags=display="Cache";
-/efs            ext4    /dev/block/by-name/efs                  flags=backup=1;display="Efs";
-/sec_efs        ext4    /dev/block/by-name/sec_efs              flags=backup=1;display="Sec Efs";
-/modem          emmc    /dev/block/by-name/radio                flags=backup=1;display="Modem";
-/misc           emmc    /dev/block/by-name/misc
-/dtbo           emmc    /dev/block/by-name/dtbo                 flags=display="DTBO Image";flashimg=1;backup=1;
-/prism          ext4    /dev/block/by-name/prism                flags=display="Prism";backup=0;
-/prism_image    emmc    /dev/block/by-name/prism                flags=display="Prism Image";backup=1;flashimg=1;
-/optics         ext4    /dev/block/by-name/optics               flags=display="Optics";backup=0;
-/optics_image   emmc    /dev/block/by-name/optics               flags=display="Optics Image";backup=1;flashimg=1;
-/up_param       emmc    /dev/block/by-name/up_param             flags=display="Param";backup=1;flashimg=1;
-/vbmeta_system  emmc    /dev/block/by-name/vbmeta               flags=display="Vbmeta System";backup=1;flashimg=1;
-/vbmeta         emmc    /dev/block/by-name/vbmeta               flags=display="Vbmeta Samsung";backup=1;flashimg=1;
+# Physical partitions - Data
+/optics			ext4		/dev/block/by-name/optics							flags=display="Optics"
+/prism			ext4		/dev/block/by-name/prism							flags=display="Prism"
+/metadata		ext4		/dev/block/platform/bootdevice/by-name/md_udc		flags=display="Metadata";wipeingui;wipeduringfactoryreset
+/data			f2fs		/dev/block/by-name/userdata							flags=length=-16384;fileencryption=aes-256-xts:aes-256-cts:v1
+/cache          ext4      	/dev/block/platform/bootdevice/by-name/cache      	flags=display="Cache";wipeingui;wipeduringfactoryreset
 
-# External Stuff
-/storage 	   ext4	/data/media/0									flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable
-/external_sd    auto    /dev/block/mmcblk1p1 /dev/block/mmcblk1          flags=fsflags=utf8;display="MicroSD";storage;wipeingui;removable
-/usb-otg    	auto	/dev/block/sda1	/dev/block/sda				flags=display="USB-OTG";storage;wipeingui;removable
+
+# FOTA
+/dsp			emmc		/dev/block/by-name/dsp
+/dtbo			emmc		/dev/block/by-name/dtbo								flags=backup=1;display="Dtbo"
+/spmfw			emmc		/dev/block/by-name/spmfw
+/scp1			emmc		/dev/block/by-name/scp1
+/sspm_1			emmc		/dev/block/by-name/sspm_1
+
+#Auto-generated code by FOTA Portal
+/gz1			emmc		/dev/block/by-name/gz1
+/optics_image	emmc		/dev/block/by-name/optics							flags=backup=1;display="Optics Image";flashimg=1
+/param			emmc		/dev/block/by-name/param							flags=backup=1;display="Param"
+
+
+# Physical partitions - Important Data - Must Backup
+/efs			emmc		/dev/block/by-name/efs								flags=backup=1;display="EFS"
+/sec_efs		emmc		/dev/block/by-name/sec_efs							flags=backup=1;display="SEC EFS"
+/nvram			emmc		/dev/block/by-name/nvram							flags=backup=1;display="Nvram"
+/nvdata			emmc		/dev/block/by-name/nvdata							flags=backup=1;display="Nvdata"
+/nvcfg			emmc		/dev/block/by-name/nvcfg							flags=backup=1;display="Nvcfg"
+/protect1		emmc		/dev/block/by-name/protect2							flags=backup=1;display="Protect2"
+/protect1		emmc		/dev/block/by-name/protect1							flags=backup=1;display="Protect1"
+/persistent		emmc		/dev/block/by-name/persistent						flags=backup=1;display="Persistent"
+
+# CP Slot a.k.a baseband image
+/md1img			emmc		/dev/block/platform/bootdevice/by-name/md1img		flags=backup=1;display="Modem"
+
+# Physical partitions - Backupable
+/boot			emmc		/dev/block/by-name/boot								flags=backup=1;display="Boot Image";flashimg=1
+/recovery		emmc		/dev/block/by-name/recovery							flags=backup=1;display="Recovery Image";flashimg=1
+/prism_image	emmc		/dev/block/by-name/prism							flags=backup=1;display="Prism Image";flashimg=1
+/up_param		emmc		/dev/block/by-name/up_param							flags=backup=1;display="Logo";flashimg=1
+
+
+/vbmeta     	   emmc      /dev/block/platform/bootdevice/by-name/vbmeta    		 flags=backup=1;display="Vbmeta";flashimg=1
+/vbmeta_system     emmc      /dev/block/platform/bootdevice/by-name/vbmeta_system    flags=backup=1;display="Vbmeta System";flashimg=1
+/vbmeta_vendor     emmc      /dev/block/platform/bootdevice/by-name/vbmeta_vendor    flags=backup=1;display="Vbmeta Vendor";flashimg=1
+
+
+
+# External storage
+/external_sd	vfat		/dev/block/mmcblk1p1	/dev/block/mmcblk1			flags=display="Micro SD Card";storage;wipeingui;removable
+/usb_otg		auto		/dev/block/sda1 		/dev/block/sda				flags=display="USB OTG";storage;wipeingui;removable

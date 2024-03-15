@@ -24,34 +24,14 @@ PRODUCT_RELEASE_NAME := f22
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 
-# Inherit some common TWRP stuff.
-$(call inherit-product, vendor/twrp/config/common.mk)
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
 # Inherit device configuration
+$(call inherit-product, device/samsung/f22/device.mk)
 
-# Dynamic partitions
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-
-# TWRP
-TW_INCLUDE_FASTBOOTD := true
-TW_HAS_FASTBOOTD := true
-
-# fastbootd
-PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.0-impl-mock \
-    android.hardware.fastboot@1.0-impl-mock.recovery \
-    fastbootd
-    
-PRODUCT_PROPERTY_OVERRIDES +=\
-	ro.fastbootd.available=true
-	ro.boot.dynamic_partitions=true 
-	
-# Apex Libraries
-PRODUCT_HOST_PACKAGES += \
-    libandroidicu
-
-#TWRP Flags
-TW_INCLUDE_PYTHON := true
+# Inherit some common TWRP stuff.
+$(call inherit-product, vendor/twrp/config/common.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_NAME := twrp_f22
